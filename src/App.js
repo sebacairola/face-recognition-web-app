@@ -37,7 +37,7 @@ class App extends Component{
       imageUrl: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      navState: 'register'
     }
   }
 
@@ -74,36 +74,39 @@ class App extends Component{
   }
 
   onRouteChange = (route) => {
-    if(route === 'signout'){
-      this.setState({isSignedIn: false});
+    if(route === 'register'){
+      this.setState({navState: 'signin'});
     } else if( route === 'home'){
-      this.setState({isSignedIn: true});
+      this.setState({navState: 'signout'});
     } else if (route === 'signin'){
-      this.setState({isSignedIn: false});
+      this.setState({navState: 'register'});
     }
     this.setState({ route: route });
   }
 
   render(){
-    if(this.state.route === 'home'){
+
+    let {navState, imageUrl, box, route} = this.state;
+
+    if(route === 'home'){
       return(
         <div>
           <Particles className="particles" params={particleOptions}/>
-          <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+          <Navigation onRouteChange={this.onRouteChange} navState={navState} />
           <Logo />
           <Rank />
           <ImageLinkForm 
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
           />
-          <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+          <FaceRecognition box={box} imageUrl={imageUrl}/>
         </div>           
       )
-    } else if( this.state.route === 'signin'){
+    } else if(route === 'signin'){
       return(
         <div>
           <Particles className="particles" params={particleOptions}/>
-          <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+          <Navigation onRouteChange={this.onRouteChange} navState={navState} />
           <SignIn onRouteChange={this.onRouteChange}/>
         </div>     
       ) 
@@ -111,7 +114,7 @@ class App extends Component{
       return(
         <div>
           <Particles className="particles" params={particleOptions}/>
-          <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+          <Navigation onRouteChange={this.onRouteChange} navState={navState} />
           <Register onRouteChange={this.onRouteChange}/>
         </div>     
       )
