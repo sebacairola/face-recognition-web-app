@@ -3,7 +3,7 @@ import React from 'react';
 
 const Rank = () => {
     return(
-        <div>
+        <div className="tc">
             <div className="white f3"> 
                 {'Seba, your actual rank is ...'}
             </div>
